@@ -1,32 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
 <?php
-
-if(isset($_POST['submit']))
-{
-	$counter = 0;
-	$sudoku = 
-	[
-		[],[],[],[],[],[],[],[],[]
-	];
-	for($column = 1;$column < 4;$column++)
+	session_start();
+	if(isset($_SESSION['sudoku']))
 	{
-		for($row = 1; $row < 4; $row++)
+		?> <script><?php
+		echo 'sudoku_board();';
+		echo 'ctx.beginPath();
+		ctx.font = "32px Arial";';
+		$sudoku = $_SESSION['sudoku'];
+		$y_counter = 60;
+
+		foreach($sudoku as $row)
 		{
-			for($slot = 1; $slot < 10;$slot++)
+			$index = 0;
+			for($i = 40;$i < 450;$i += 50)
 			{
-				$temp_name = 'column_'.$column.'_row_'.$row.'_slot_'.$slot;
-				if(!isset($_POST[$temp_name]))
-				{
-					echo 'Missing value. Please check all boxes for correction.';
-					return;
-				} elseif (!is_numeric($_POST[$temp_name])) {
-					echo 'Invalid digit. Please check all boxes for correction.';
-					return;
-				} else {
-					array_push($sudoku[$counter],$_POST[$temp_name]);
-				}
+				echo 'ctx.fillText("'.$row[$index].'", '.$i.', '.$y_counter.');';
+				$index++;
 			}
-			$counter++;
+
+			$y_counter += 50;
 		}
+
+		?></script><?php
 	}
-	
-}
+	?>
+</body>
+</html>
