@@ -3,7 +3,7 @@
 .vl1 {
   border-left: 2px solid black;
   position: fixed;
-  height: 400px;
+  height: 495px;
   left: 169px;
   margin-left: -3px;
   top: 3px;
@@ -12,36 +12,40 @@
 .vl2 {
   border-left: 2px solid black;
   position: fixed;
-  height: 400px;
+  height: 495px;
   left: 328.4px;
   margin-left: -3px;
   top: 3px;
 }
 .hl1 {
   border-top: 2px solid black;
-  width: 495px;
+  width: 485px;
   position: fixed;
-  left: 3px;
+  left: 7px;
   margin-left: -3px;
   top: 167.4px;
 }
 
 .hl2 {
   border-top: 2px solid black;
-  width: 495px;
+  width: 485px;
   position: fixed;
-  left: 3px;
+  left: 7px;
   margin-left: -3px;
-  top: 330.8px;
+  top: 330px;
 }
 
 .wrapper {
   /*max-width: 940px;*/
-  margin: 0 auto;
+  !margin: 0 auto;
+  justify-items: center;
 }
 
 #sudoku {
+  text-align: center;
+  display:inline-block;
   position: fixed;
+  !margin: 0 auto;
 }
 
 .wrapper > div {
@@ -57,8 +61,9 @@
   margin: auto 2px;
   !color: #d9480f;
 }.wrapper {
+  text-align: center;
   display: grid;
-  position: fixed;
+  position: absolute;
   grid-template-columns: repeat(9, 1fr);
   grid-gap: 0px;
   grid-auto-rows: minmax(50px, auto);

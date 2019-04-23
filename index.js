@@ -166,6 +166,11 @@ var fillBoard = function(sudoku)
 	sudoku_board();
 }
 
+var checkErrors = function(sudoku)
+{
+	return;
+}
+
 // var clearBoard = function()
 // {
 // 	ctx.clearRect(0, 0, 500, 500);
