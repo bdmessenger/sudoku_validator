@@ -21,33 +21,65 @@
 		?>
 	</div>
 	<button onclick="postForm()" style="margin-top: 5px; ">Submit</button>
+	<button onclick="auto_fill_boxes()" style="margin-top: 5px; ">Auto Fill</button>
 
 
-
+	<script src="index.js"></script>
 	<script>
+		var sudoku;
+
 		function postForm() 
 		{
-			var sudoku = [];
+			var queryString = "";
 			var form = document.querySelectorAll("#cell_input");
 
-			// var index = 0;
-			// var y_counter = 60;
-			// while(index != 81)
-			// {
-			// 	for(var i = 40; i < 450; i += 50)
-			// 	{
-			// 		var item = form[index];
-			// 		sudoku.push({
-			// 			"name" : item.name,
-			// 			"value" : item.value,
-			// 			"position" : {x: i, y: y_counter},
-			// 			"valid" : true
-			// 		});
-			// 		index++;
-			// 	}
+			var index = 0;
+			var y_counter = 60;
+			while(index != 81)
+			{
+				for(var i = 40; i < 450; i += 50)
+				{
+					var item = form[index];
+					var modified_value = item.value;
 
-			// 	y_counter += 50;
-			// }
+					if(isNaN(item.value) == false)
+					{
+						modified_value = parseInt(item.value);
+					}
+
+					queryString += "form[]=" + JSON.stringify({
+						"name" : item.name,
+						"value" : modified_value,
+						"position" : {x: i, y: y_counter},
+						"valid" : true
+					});
+					if(index < 80) queryString += "&";
+					index++;
+				}
+
+				y_counter += 50;
+			}
+			
+			var xmlHttp = new XMLHttpRequest();
+			xmlHttp.onreadystatechange = function()
+			{
+				if(this.readyState == 4 && this.status == 200)
+				{
+					try {
+				        sudoku = JSON.parse(this.responseText);
+				    } catch (e) {
+						console.log(this.responseText);
+				        return false;
+				    }
+
+				    console.log(sudoku);
+				    return true;
+				}
+			};
+
+			xmlHttp.open("POST","process.php",true);
+			xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+			xmlHttp.send(queryString);
 			
 		}
 	</script>

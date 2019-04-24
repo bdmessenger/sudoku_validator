@@ -16,7 +16,8 @@ function auto_fill_boxes()
 		[2,7,8,4,9,1,3,6,5],
 		[5,3,9,6,8,2,1,4,7]
 	];
-	var inputArray = document.getElementsByTagName('input');
+
+	var inputArray = document.querySelectorAll('#cell_input');
 	
 	var key = 0;
 	for(var i = 0; i < 9; i++)

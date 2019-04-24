@@ -1,63 +1,55 @@
 <?php
 
-session_start();
+//var_dump($_POST['form']);
 
-if(isset($_POST['submit']))
+if(isset($_POST['form']))
 {
 
-	$index = 0;
-	$sudoku = 
-	[
-		[],[],[],[],[],[],[],[],[]
-	];
-	
-	for($row = 1; $row < 10; $row++)
-	{
-		for($slot = 1; $slot < 10; $slot++)
+	$dataArray = [];
+
+	$string = '[';
+
+	//var_dump(intval(json_decode($string[0])->value));
+
+	for ($index = 0; $index < 81; $index++) 
+	{ 
+		$string .= $_POST['form'][$index];
+		$json_array = json_decode($_POST['form'][$index],true);
+		array_push($dataArray, $json_array['value']);
+
+		if(!isset($dataArray[$index]) || empty($dataArray[$index]) && $dataArray[$index] == "")
 		{
-			$temp_name = 'row_'.$row.'_slot_'.$slot;
-			if(!isset($_POST[$temp_name]) || empty($_POST[$temp_name]) && $_POST[$temp_name] != 0)
-			{
-				$_SESSION['error_message'] = 'Missing value. Please check all boxes for correction.';
-				header('Location: index.php');
-				exit();
-			} elseif (!is_numeric($_POST[$temp_name]) || $_POST[$temp_name] == 0) {
-				$_SESSION['error_message'] = 'Invalid digit. Please check all boxes for correction.';
-				header('Location: index.php');
-				exit();
-			} else {
-				array_push($sudoku[$index],$_POST[$temp_name]);
-			}
+			echo 'Missing value(s). Please check all input fields in search for errors.';
+			return;
+		} elseif (!is_numeric($dataArray[$index]) || $dataArray[$index] == 0) {
+			echo 'Invalid digit. Please check all input fields in search for errors.';
+			return;
 		}
-		$index++;
+
+		if($index < 80)$string .= ',';
 	}
 
-	//$_SESSION['sudoku'] = $sudoku;
-}?>
+	$string .= ']';
+	//echo $string;
 
-<!DOCTYPE html>
-<html>
-	<body>
-		<canvas id="sudoku" width="500" height="500" style="border:1px solid #d3d3d3;"></canvas>
-		<script src="index.js"></script>
-		<script>
-			var results = validate(<?php echo json_encode($sudoku); ?>);
-			if (results.length == 0)
-			{
-				console.log("length is zero?");
-				// <?php //header('Location: results.php');
-				// exit(); ?>
 
-			}
 
-			for (const index in results)
-			{
-				console.log(results[index]);
-			}
+	return;
+}
 
-			sudoku_board();
-			fillBoard(<?php echo json_encode($sudoku); ?>);
 
-		</script>
-	</body>
-</html>
+function validate(array)
+{
+	$
+}
+
+
+function find_duplicate_in_array($array)
+{
+	$object = array();
+	foreach (array_count_values($array) as $val => $c) {
+		if($c > 1) $object[] = $val;
+	}
+
+	var_dump($object);
+}
