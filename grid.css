@@ -2,17 +2,17 @@
   display: grid;
   border: 2px dashed rgba(114, 186, 94, 0.35);
   height: 525px;
-  grid-template-columns: 55px 55px 65px 55px 55px 65px 55px 55px 55px;
-  grid-template-rows: 55px 55px 65px 55px 55px 65px 55px 55px 55px;
+  grid-template-columns: 50px 50px 65px 50px 50px 65px 50px 50px 50px;
+  grid-template-rows: 50px 50px 65px 50px 50px 65px 50px 50px 50px;
   background: rgba(114, 186, 94, 0.05);
   padding: 15px;
 }
 .item {
-  !text-align:center;
+  text-align:center !important;
   width: 50px;
   height: 50px;
   background: rgba(255, 213, 70, 0.4);
-  border: 2px dashed rgba(236, 198, 48, 0.5);
+  /*border: 2px dashed rgba(236, 198, 48, 0.5);*/
 }
 
 .container {
@@ -20,6 +20,8 @@
 }
 
 #cell_input {
-  margin: 15px 10px;
+/*  margin: 15px 10px;*/
   text-align: center;
+  margin-top: 10px;
+  height: 25px;
 }

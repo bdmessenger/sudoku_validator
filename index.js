@@ -153,13 +153,8 @@ var fillBoard = function(sudoku)
 	ctx.beginPath();
 	ctx.font = "32px Arial";
 
-	for(const index in sudoku){
-		var data = sudoku[index];
-		if(data.valid == false)
-		{
-			ctx.fillStyle = "#db1cb1";
-			ctx.fillRect(data.position.x-15, data.position.y-35, 50, 50);
-		}
+	for(const index in sudoku.data){
+		var data = sudoku.data[index];
 		ctx.beginPath();
 		ctx.fillStyle = "#000000";
 		ctx.fillText(data.value,data.position.x,data.position.y);
@@ -167,9 +162,42 @@ var fillBoard = function(sudoku)
 	sudoku_board();
 }
 
-var checkErrors = function(sudoku)
+function markAllCellsValid()
 {
-	return;
+	var queryArray = document.querySelectorAll(".item");
+
+	for(const i in queryArray)
+	{
+		if(i < 81) queryArray[i].style.background = "rgba(121, 244, 112, 0.4)";
+	}
+
+	return true;
+}
+
+function markErrors(errors)
+{
+	clearErrorMarkings();
+	markAllCellsValid();
+	//console.log(errors);
+	var error_log = [];
+
+	for(const i in errors)
+	{
+		var parent = document.querySelector("div.item input[name='"+errors[i].name+"']").parentNode;
+		parent.style.background =  "rgba(221, 33, 33, 0.4)";
+		error_log.push(errors[i]);
+	}
+
+	return error_log;
+}
+
+function clearErrorMarkings()
+{
+	var sudoku = document.querySelectorAll(".item");
+	for(var i = 0; i < 81; i++)
+	{
+		sudoku[i].style.background = "rgba(255, 213, 70, 0.4)";
+	}
 }
 
 // var clearBoard = function()
