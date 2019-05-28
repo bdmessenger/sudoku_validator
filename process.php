@@ -2,6 +2,14 @@
 
 //var_dump($_POST['form']);
 
+if(isset($_POST['data']))
+{
+	session_start();
+	$_SESSION['data'] = $_POST['data'];
+	header('location: result.php');
+	exit();
+}
+
 if(isset($_POST['form']))
 {
 	$dataObject = [];
@@ -19,9 +27,9 @@ if(isset($_POST['form']))
 
 		if($value !== 0 && !isset($value) || $value !== 0 && empty($value) && $value == "")
 		{
-			$errors[$json_array['name']] = 'Missing value(s). Please check all input fields in search for errors.';
+			$errors[$json_array['name']] = 'Missing value(s). Please check all input fields for errors.';
 		} elseif (!is_numeric($value) || $value == 0) {
-			$errors[$json_array['name']] = 'Invalid digit(s). Please check all input fields in search for errors.';
+			$errors[$json_array['name']] = 'Invalid digit(s). Please check all input fields for errors.';
 		}
 	}
 

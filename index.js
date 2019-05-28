@@ -1,7 +1,3 @@
-const range = (start, end) => {
-    const length = end - start;
-    return Array.from({ length }, (_, i) => start + i);
-}
 
 function auto_fill_boxes()
 {
@@ -32,70 +28,6 @@ function auto_fill_boxes()
 			}
 		}
 	}
-}
-
-function find_duplicate_in_array(array) {
-	const object = {};
-	const result = [];
-
-	array.forEach(item => {
-		if(!object[item])
-			object[item] = 0;
-		object[item] += 1;
-	});
-
-	for(const prop in object){
-		if(object[prop] >= 2){
-			result.push(prop);
-		}
-	}
-	
-	if(result.length == 0){
-		return false;
-	} else {
-		return result;
-	}
-}
-
-var validate = function(arrays, mode = 0)
-{
-	var validation = true;
-	for(var i = 0; i < 9; i++)
-	{
-		const container = [[],[]];
-		const indexes = [[],[]];
-		for(var s = i; s < 81;s += 9)
-		{
-			container[0].push(parseInt(arrays[s].value));
-			indexes[0].push(s);
-		}
-
-		for(var b of range(i * 9, ((i + 1) * 9)))
-		{
-			container[1].push(parseInt(arrays[b].value));
-			indexes[1].push(b);
-		}
-
-		const find_duplicate_result = find_duplicate_in_array(container[mode]);
-
-		console.log(find_duplicate_result)
-
-		if(find_duplicate_result !== false)
-		{
-			for(const index in find_duplicate_result)
-			{
-				var number = find_duplicate_result[index];
-				for(const key in container[mode])
-				{
-					if(container[mode][key] == number)
-					{
-						arrays[indexes[mode][key]].valid = false;
-						validation = false;
-					}
-				}
-			}
-		}
-	} return validation;
 }
 
 
@@ -162,6 +94,22 @@ var fillBoard = function(sudoku)
 	sudoku_board();
 }
 
+var fillBoardWithMissingCells = function(sudoku)
+{
+	ctx.clearRect(0, 0, 500, 500);
+	ctx.beginPath();
+	ctx.font = "32px Arial";
+
+	var data = sudoku[0].concat(sudoku[1],sudoku[2],sudoku[3],sudoku[4],sudoku[5],sudoku[6],sudoku[7],sudoku[8]);
+
+	for(const index in data){
+		ctx.beginPath();
+		ctx.fillStyle = "#000000";
+		ctx.fillText(data[index].value,data[index].position.x,data[index].position.y);
+	}
+	sudoku_board();
+}
+
 function markAllCellsValid()
 {
 	var queryArray = document.querySelectorAll(".item");
@@ -200,7 +148,94 @@ function clearErrorMarkings()
 	}
 }
 
-// var clearBoard = function()
-// {
-// 	ctx.clearRect(0, 0, 500, 500);
-// }
+function removeCellsByRandom(sudoku, mode = 'normal')
+{
+	var squares = rearrangeInSquares(sudoku);
+	var normal = [4,3,6,3,4,3,6,3,4];
+	var hard = [3,4,2,4,1,4,2,4,3];
+
+
+	for(var k = 0; k < 9; k++)
+	{
+		for(var i = 0; i < (9 - (eval(mode)[k]) ); i++)
+		{
+			var rand_int = Math.floor(Math.random() * squares[k].length);
+			squares[k].splice(rand_int,1);
+		}
+	}
+
+	return squares;
+}
+
+
+function rearrangeInSquares(sudoku)
+{
+	var columns = getByColumns(sudoku);
+	var counter = 0;
+	var cell_groups = [
+		[],[],[],[],[],[],[],[],[]
+	];
+
+	for(var k = 0; k < 9; k++)
+	{
+		while(cell_groups[k].length != 9)
+		{
+			for(var i = counter; i < (counter + 3); i++)
+			{
+				cell_groups[k].push(columns[i].shift());
+			}
+		}
+
+		if(columns[0].length == 0)
+		{
+			for(var y=0;y<3;y++)columns.shift();
+		}
+	}
+	return cell_groups;
+}
+
+
+function getByColumns(sudoku)
+{
+	var data = sudoku.data;
+	var cell_groups = [];
+
+	for(var i = 1; i < 10; i++)
+	{
+		var array = [];
+		for(const index in data)
+		{
+			if(data[index].name.includes("slot_" + i))
+			{
+				array.push(data[index]);
+			}
+		}
+
+		cell_groups.push(array);
+	}
+
+	return cell_groups;
+}
+
+function getByRows(sudoku)
+{
+	var data = sudoku.data;
+	var cell_groups = [];
+
+	for(var i = 1; i < 10; i++)
+	{
+		var array = [];
+		for(const index in data)
+		{
+			if(data[index].name.includes("row_" + i))
+			{
+				array.push(data[index]);
+			}
+		}
+
+		cell_groups.push(array);
+	}
+
+	return cell_groups;
+
+}
