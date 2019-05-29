@@ -19,7 +19,7 @@ if(isset($_SESSION['data']))
 	<body>
 		<div style="margin: 0 auto;text-align:center;">
 			<h3>Sudoku Puzzle Completed!</h3>
-			<h5>*Click below the canvas to setup a incompleted puzzle. You can also print the puzzle out.* </h5>
+			<h5>*Click below the canvas to setup an incompleted puzzle. You can also print the puzzle out.* </h5>
 			<input id="data" type="hidden" value='<?php echo $_SESSION['data'];?>'>
 			<canvas id="sudoku" width="500" height="500" style="border:1px solid #d3d3d3;"></canvas>
 			<br>
@@ -29,7 +29,7 @@ if(isset($_SESSION['data']))
 			<button onclick="print()">Print</button>
 		</div>
 
-		<script type="text/javascript" src="index.js"></script>
+		<script type="text/javascript" src="js/index.js"></script>
 		<script type="text/javascript">
 			var data = JSON.parse(document.querySelector("#data").value);
 

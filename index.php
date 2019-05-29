@@ -5,7 +5,8 @@
 	<link rel="stylesheet" type="text/css" href="grid.css">
 </head>
 <body>
-	<h4>Sudoku Validator</h4>
+	<div style="margin: 0 auto;text-align:center;">
+	<h4>Sudoku Validator <span style="font-size:13px;">By BDMessenger</span></h4>
 	<h3 id="validation">Validation: </h3>
 	<h5 id="message"></h5>
 	<div class="container">
@@ -28,13 +29,14 @@
 	<input type="hidden" id="hidden_data" name="data" value=""></input>
 	<input type="submit" id="finalize" style="margin-top: 5px;" value="Draw Sudoku Board">
 	</form>
+</div>
 
 
-	<script src="index.js"></script>
+	<script src="js/index.js"></script>
 	<script>
 		var sudoku;
 
-		function postForm() 
+		function postForm()
 		{
 			document.querySelector("#hidden_data").value = '';
 			var queryString = "";
@@ -66,7 +68,7 @@
 
 				y_counter += 50;
 			}
-			
+
 			var xmlHttp = new XMLHttpRequest();
 			xmlHttp.onreadystatechange = function()
 			{
@@ -94,7 +96,7 @@
 					    {
 					    	queryString = queryString.replace('&form[]=',',');
 					    }
-					    
+
 					    document.querySelector("#hidden_data").value = '{"data":['+queryString+']}';
 
 				    } else if(!sudoku['errors'].hasOwnProperty('message')) {
@@ -149,7 +151,7 @@
 				    	document.querySelector("#message").innerHTML = 'The following cells: ' + error_message + '<br> are invalid.';
 				    	document.querySelector("#validation").innerHTML += 'false';
 				    }
-				    
+
 				    if(document.querySelector("#validation").innerHTML.includes("true"))
 				    {
 				    	document.querySelector('#finalize').style.visibility = 'visible';

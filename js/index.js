@@ -1,4 +1,6 @@
 
+
+
 function auto_fill_boxes()
 {
 	var example = [
@@ -14,7 +16,7 @@ function auto_fill_boxes()
 	];
 
 	var inputArray = document.querySelectorAll('#cell_input');
-	
+
 	var key = 0;
 	for(var i = 0; i < 9; i++)
 	{
